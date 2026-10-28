@@ -56,6 +56,10 @@
 
     <!-- Game Active Controls -->
     <div id="game-controls" class="action-toolbar" style="display: none;">
+      <button id="btn-resend" class="btn-secondary" style="display: none; border-color: #38bdf8; color: #38bdf8;">
+        <span>🔊</span>
+        <span>Resend Last Move</span>
+      </button>
       <button id="btn-rematch" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">
         <span>🔄</span>
         <span>Restart Game</span>
@@ -79,6 +83,8 @@
       </div>
     </div>
   </main>
+
+  <div id="toast" class="toast"></div>
 
   <script type="module" src="./app.js"></script>
 </body>

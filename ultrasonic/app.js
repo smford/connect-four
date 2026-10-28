@@ -15,6 +15,7 @@ class UltrasonicApp {
     this.modem = null;
     this.localPlayer = null;
     this.turnCounter = 0;
+    this.lastLocalMove = null;
 
     this.cacheElements();
     this.initBoard();
@@ -32,8 +33,10 @@ class UltrasonicApp {
 
     this.btnP1 = document.getElementById('btn-p1');
     this.btnP2 = document.getElementById('btn-p2');
+    this.btnResend = document.getElementById('btn-resend');
     this.btnRematch = document.getElementById('btn-rematch');
     this.btnLeave = document.getElementById('btn-leave');
+    this.toastEl = document.getElementById('toast');
 
     // Modem Controls
     this.btnModeToggle = document.getElementById('btn-mode-toggle');
@@ -91,10 +94,35 @@ class UltrasonicApp {
         : 'Mode: Audible Arcade (8-bit)';
     });
 
+    this.btnResend.addEventListener('click', async () => {
+      if (!this.lastLocalMove || this.modem.isTransmitting) return;
+      audioFx.playClick();
+      this.btnResend.disabled = true;
+      this.btnResend.style.opacity = '0.6';
+      this.showToast(`Resending Move (Col ${this.lastLocalMove.col + 1})...`);
+
+      try {
+        await this.modem.transmit({
+          type: 0, // MOVE
+          player: this.lastLocalMove.player,
+          col: this.lastLocalMove.col,
+          counter: this.lastLocalMove.counter
+        });
+        this.showToast('Last move sound resent!');
+      } catch (err) {
+        console.error('Failed to resend move:', err);
+      } finally {
+        this.btnResend.disabled = false;
+        this.btnResend.style.opacity = '1';
+      }
+    });
+
     this.btnRematch.addEventListener('click', async () => {
       audioFx.playClick();
       this.engine.reset();
       this.board.clear();
+      this.lastLocalMove = null;
+      if (this.btnResend) this.btnResend.style.display = 'none';
       this.updateTurnUI();
 
       // Transmit restart packet
@@ -155,8 +183,18 @@ class UltrasonicApp {
 
     this.updateTurnUI();
 
-    // Transmit move over acoustic modem
+    // Save last local move for resend if opponent missed the acoustic signal
     this.turnCounter = (this.turnCounter + 1) % 4;
+    this.lastLocalMove = {
+      col,
+      player: this.localPlayer,
+      counter: this.turnCounter
+    };
+    if (this.btnResend) {
+      this.btnResend.style.display = 'inline-flex';
+    }
+
+    // Transmit move over acoustic modem
     await this.modem.transmit({
       type: 0, // MOVE
       player: this.localPlayer,
@@ -170,6 +208,13 @@ class UltrasonicApp {
       // Incoming Move from opponent
       if (packet.player === this.localPlayer) {
         // Echo of own move, ignore
+        return;
+      }
+
+      // If opponent resent their move but we already processed it, ignore duplicate
+      if (this.engine.currentTurn !== packet.player) {
+        console.log('[Modem] Received move for player', packet.player, 'but currentTurn is', this.engine.currentTurn, '- duplicate resend ignored.');
+        this.showToast('Opponent resent move (already applied)');
         return;
       }
 
@@ -188,9 +233,18 @@ class UltrasonicApp {
       // Incoming Rematch
       this.engine.reset();
       this.board.clear();
+      this.lastLocalMove = null;
+      if (this.btnResend) this.btnResend.style.display = 'none';
       this.updateTurnUI();
       audioFx.playConnect();
     }
+  }
+
+  showToast(msg) {
+    if (!this.toastEl) return;
+    this.toastEl.textContent = msg;
+    this.toastEl.classList.add('show');
+    setTimeout(() => this.toastEl.classList.remove('show'), 2500);
   }
 
   onMoveFinished(result) {

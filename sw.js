@@ -3,7 +3,7 @@
  * Provides full offline caching for static assets & runtime fallback
  */
 
-const CACHE_NAME = 'c4-pwa-v2';
+const CACHE_NAME = 'c4-pwa-v3';
 
 const STATIC_ASSETS = [
   './',
