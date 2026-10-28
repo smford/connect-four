@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Connect 4 — Public MQTT (Encrypted)</title>
+  <meta name="description" content="Play Connect 4 peer-to-peer using end-to-end AES-256-GCM encrypted WebSockets over public MQTT brokers.">
+  <meta name="theme-color" content="#0ea5e9">
+
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+  <link rel="stylesheet" href="../styles.css">
+
+  <!-- MQTT.js library -->
+  <script src="https://unpkg.com/mqtt@5.3.5/dist/mqtt.min.js"></script>
+  <!-- jsQR Fallback -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <a href="../" class="brand">
+      <div class="brand-icon">⚡</div>
+      <span>Connect 4 • MQTT</span>
+    </a>
+
+    <div class="header-controls">
+      <button id="btn-sound" class="icon-btn" title="Toggle Sound">🔊</button>
+      <a href="../" class="icon-btn" title="Back to Hub">🏠</a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Status HUD -->
+    <div id="game-hud" class="game-hud">
+      <div class="hud-player">
+        <span id="local-role-badge">Select Host or Join</span>
+      </div>
+      <div class="hud-status-badge">
+        <div id="status-dot" class="status-dot disconnected"></div>
+        <span id="status-text">Disconnected</span>
+      </div>
+    </div>
+
+    <!-- Turn Banner -->
+    <div id="turn-banner" class="turn-banner">Start or Join a Match</div>
+
+    <!-- Board -->
+    <div id="board-container"></div>
+
+    <!-- Lobby Controls -->
+    <div id="lobby-controls" class="action-toolbar">
+      <button id="btn-host" class="btn-primary">
+        <span>👑</span>
+        <span>Host Game</span>
+      </button>
+      <button id="btn-scan" class="btn-secondary">
+        <span>📷</span>
+        <span>Scan QR Code</span>
+      </button>
+    </div>
+
+    <!-- Game Active Controls -->
+    <div id="game-controls" class="action-toolbar" style="display: none;">
+      <button id="btn-rematch" class="btn-primary">
+        <span>🔄</span>
+        <span>Play Again</span>
+      </button>
+      <button id="btn-leave" class="btn-secondary">
+        <span>🚪</span>
+        <span>Leave Match</span>
+      </button>
+    </div>
+  </main>
+
+  <!-- QR Host Modal -->
+  <div id="qr-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 class="modal-title">Scan to Join Game</h3>
+      <p class="modal-desc">Have Player 2 scan this QR code with their camera to join over encrypted MQTT.</p>
+      <div id="qr-box" class="qr-display-container"></div>
+      <div class="action-toolbar">
+        <button id="btn-copy-link" class="btn-secondary">📋 Copy Invite Link</button>
+        <button id="qr-close" class="btn-secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Camera Scanner Modal -->
+  <div id="scanner-modal" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 class="modal-title">Scan Host QR Code</h3>
+      <p class="modal-desc">Point your camera at Player 1's screen to connect instantly.</p>
+      <div class="camera-preview-container">
+        <video id="scanner-video" playsinline></video>
+        <div class="scanner-crosshair"></div>
+      </div>
+      <button id="scanner-close" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

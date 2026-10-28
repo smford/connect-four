@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Connect 4 — Ultrasonic Acoustic Modem</title>
+  <meta name="description" content="100% offline air-gapped Connect 4 peer-to-peer gameplay via microphone and speaker audio FSK modulation.">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="manifest" href="../manifest.json">
+  <link rel="icon" type="image/svg+xml" href="../icons/icon.svg">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a href="../" class="brand">
+      <div class="brand-icon" style="background: linear-gradient(135deg, #10b981, #059669);">📡</div>
+      <span>Connect 4 • Acoustic</span>
+    </a>
+
+    <div class="header-controls">
+      <button id="btn-sound" class="icon-btn" title="Toggle Sound">🔊</button>
+      <a href="../" class="icon-btn" title="Back to Hub">🏠</a>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- Status HUD -->
+    <div id="game-hud" class="game-hud">
+      <div class="hud-player">
+        <span id="local-role-badge">Select Player Role</span>
+      </div>
+      <div class="hud-status-badge">
+        <div id="status-dot" class="status-dot disconnected"></div>
+        <span id="status-text">Microphone Idle</span>
+      </div>
+    </div>
+
+    <!-- Turn Banner -->
+    <div id="turn-banner" class="turn-banner">Select Your Role to Begin</div>
+
+    <!-- Board -->
+    <div id="board-container"></div>
+
+    <!-- Role Selection (Air-gapped) -->
+    <div id="role-selection" class="action-toolbar">
+      <button id="btn-p1" class="btn-primary" style="background: linear-gradient(135deg, #f43f5e, #be123c);">
+        <span>🔴</span>
+        <span>I am Player 1 (Red)</span>
+      </button>
+      <button id="btn-p2" class="btn-primary" style="background: linear-gradient(135deg, #facc15, #ca8a04); color: #0f172a;">
+        <span>🟡</span>
+        <span>I am Player 2 (Yellow)</span>
+      </button>
+    </div>
+
+    <!-- Game Active Controls -->
+    <div id="game-controls" class="action-toolbar" style="display: none;">
+      <button id="btn-rematch" class="btn-primary" style="background: linear-gradient(135deg, #10b981, #059669);">
+        <span>🔄</span>
+        <span>Restart Game</span>
+      </button>
+      <button id="btn-leave" class="btn-secondary">
+        <span>🚪</span>
+        <span>Change Role</span>
+      </button>
+    </div>
+
+    <!-- Acoustic Modem Waterfall Visualizer -->
+    <div class="acoustic-panel">
+      <div class="acoustic-status-row">
+        <span id="tx-status">Acoustic Modem Standby</span>
+        <button id="btn-mode-toggle" class="acoustic-mode-pill">Mode: Near-Ultrasonic (Silent)</button>
+      </div>
+      <canvas id="waterfall-canvas" class="waterfall-canvas" width="480" height="90"></canvas>
+      <div class="acoustic-status-row" style="font-size: 0.75rem; color: #64748b;">
+        <span>Air-Gapped: 0% Wi-Fi / Bluetooth Required</span>
+        <span>FSK Audio Modulation</span>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

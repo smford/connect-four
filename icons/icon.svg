@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <radialGradient id="redDisc" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="60%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#9f1239"/>
+    </radialGradient>
+    <radialGradient id="yellowDisc" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="60%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </radialGradient>
+  </defs>
+  <!-- Background Board Frame -->
+  <rect width="512" height="512" rx="100" fill="url(#bg)"/>
+  
+  <!-- 4-in-a-row diagonal / arrangement -->
+  <circle cx="150" cy="362" r="54" fill="url(#redDisc)" stroke="#fff" stroke-width="6"/>
+  <circle cx="220" cy="292" r="54" fill="url(#redDisc)" stroke="#fff" stroke-width="6"/>
+  <circle cx="290" cy="222" r="54" fill="url(#redDisc)" stroke="#fff" stroke-width="6"/>
+  <circle cx="360" cy="152" r="54" fill="url(#redDisc)" stroke="#fff" stroke-width="6"/>
+  
+  <!-- Opponent Yellow Discs -->
+  <circle cx="150" cy="222" r="54" fill="url(#yellowDisc)" stroke="#fff" stroke-width="4" opacity="0.85"/>
+  <circle cx="290" cy="362" r="54" fill="url(#yellowDisc)" stroke="#fff" stroke-width="4" opacity="0.85"/>
+  <circle cx="360" cy="292" r="54" fill="url(#yellowDisc)" stroke="#fff" stroke-width="4" opacity="0.85"/>
+</svg>

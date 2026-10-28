@@ -1,0 +1,19 @@
+{
+  "name": "Connect 4 PWA Suite",
+  "short_name": "Connect4",
+  "description": "Zero-backend Connect 4 PWA Suite with MQTT, Nostr, and Ultrasonic modem transports.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1329",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "./icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -2,27 +2,173 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connect Four</title>
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background-color: #f0f2f5;
-      color: #333;
-    }
-    h1 {
-      margin-bottom: 0.5rem;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Connect 4 — Zero-Backend PWA Suite</title>
+  <meta name="description" content="Play peer-to-peer Connect 4 across zero-backend transports: encrypted MQTT, decentralized Nostr relays, or air-gapped Ultrasonic modem.">
+  <meta name="theme-color" content="#0ea5e9">
+  
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon.svg">
+  <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <h1>Connect Four</h1>
-  <p>GitHub Pages deployment configured successfully.</p>
+  <header class="app-header">
+    <a href="./" class="brand">
+      <div class="brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="m4.93 4.93 4.24 4.24"></path>
+          <path d="m14.83 9.17 4.24-4.24"></path>
+          <path d="m14.83 14.83 4.24 4.24"></path>
+          <path d="m9.17 14.83-4.24 4.24"></path>
+        </svg>
+      </div>
+      <span>Connect 4</span>
+    </a>
+
+    <div class="header-controls">
+      <button id="btn-sound-toggle" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+        🔊
+      </button>
+      <button id="btn-install" class="btn-install" title="Install as Web App">
+        Install App
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="hero-section">
+      <div class="hero-badge">Zero-Backend • Peer-to-Peer PWA</div>
+
+      <!-- Animated Mini Board Preview -->
+      <div class="mini-board-preview" aria-hidden="true">
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+        <div class="mini-board-slot"><div class="mini-p2"></div></div>
+        <div class="mini-board-slot"><div class="mini-p1"></div></div>
+      </div>
+
+      <h1 class="hero-title">Connect Four Anywhere</h1>
+      <p class="hero-subtitle">
+        Zero custom servers. Zero tracking. Play head-to-head across three revolutionary decentralized communication transports.
+      </p>
+    </section>
+
+    <div class="cards-grid">
+      <!-- Variant 1: MQTT -->
+      <a href="./mqtt/" class="transport-card card-mqtt">
+        <div>
+          <div class="card-icon-box">⚡</div>
+          <span class="card-tag">Fast &amp; Reliable</span>
+          <h2 class="card-title">Public MQTT</h2>
+          <p class="card-desc">
+            Single QR scan handshake. End-to-end encrypted with Web Crypto AES-256-GCM over public WebSocket brokers.
+          </p>
+        </div>
+        <div class="card-cta">
+          <span>Launch MQTT</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </div>
+      </a>
+
+      <!-- Variant 2: Nostr -->
+      <a href="./nostr/" class="transport-card card-nostr">
+        <div>
+          <div class="card-icon-box">🟣</div>
+          <span class="card-tag">Decentralized</span>
+          <h2 class="card-title">Nostr Relays</h2>
+          <p class="card-desc">
+            Censorship-resistant peer matching over the open Nostr protocol using Ephemeral in-memory events.
+          </p>
+        </div>
+        <div class="card-cta">
+          <span>Launch Nostr</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </div>
+      </a>
+
+      <!-- Variant 3: Ultrasonic -->
+      <a href="./ultrasonic/" class="transport-card card-ultrasonic">
+        <div>
+          <div class="card-icon-box">📡</div>
+          <span class="card-tag">Air-Gapped Local</span>
+          <h2 class="card-title">Ultrasonic Modem</h2>
+          <p class="card-desc">
+            100% offline. Zero internet or Wi-Fi required. Transmits game moves through the air using speaker and microphone acoustic FSK tones.
+          </p>
+        </div>
+        <div class="card-cta">
+          <span>Launch Ultrasonic</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </div>
+      </a>
+    </div>
+  </main>
+
+  <script type="module">
+    import { audioFx } from './shared/audio-fx.js';
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js', { scope: './' })
+          .then(reg => console.log('Service Worker registered with scope:', reg.scope))
+          .catch(err => console.warn('Service Worker registration failed:', err));
+      });
+    }
+
+    // Sound toggle
+    const soundBtn = document.getElementById('btn-sound-toggle');
+    const updateSoundBtn = () => {
+      soundBtn.textContent = audioFx.isMuted ? '🔇' : '🔊';
+    };
+    updateSoundBtn();
+
+    soundBtn.addEventListener('click', () => {
+      const muted = audioFx.toggleMute();
+      updateSoundBtn();
+      if (!muted) audioFx.playClick();
+    });
+
+    // PWA Install Prompt
+    let deferredPrompt = null;
+    const installBtn = document.getElementById('btn-install');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'block';
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        audioFx.playClick();
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          installBtn.style.display = 'none';
+        }
+        deferredPrompt = null;
+      }
+    });
+
+    window.addEventListener('appinstalled', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt = null;
+    });
+  </script>
 </body>
 </html>
