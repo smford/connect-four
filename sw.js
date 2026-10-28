@@ -3,7 +3,7 @@
  * Provides full offline caching for static assets & runtime fallback
  */
 
-const CACHE_NAME = 'c4-pwa-v1';
+const CACHE_NAME = 'c4-pwa-v2';
 
 const STATIC_ASSETS = [
   './',
@@ -15,6 +15,7 @@ const STATIC_ASSETS = [
   './shared/ui-board.js',
   './shared/audio-fx.js',
   './shared/qr.js',
+  './shared/qrcode-lib.js',
   './mqtt/index.html',
   './mqtt/mqtt-transport.js',
   './mqtt/app.js',

@@ -43,6 +43,7 @@ class MQTTApp {
     this.qrBox = document.getElementById('qr-box');
     this.qrClose = document.getElementById('qr-close');
     this.btnCopyLink = document.getElementById('btn-copy-link');
+    this.inviteUrlInput = document.getElementById('invite-url-input');
 
     this.scannerModal = document.getElementById('scanner-modal');
     this.scannerVideo = document.getElementById('scanner-video');
@@ -142,6 +143,9 @@ class MQTTApp {
 
     const baseUrl = window.location.href.split('#')[0];
     this.joinUrl = `${baseUrl}#room=${roomId}&key=${keyExport}`;
+    if (this.inviteUrlInput) {
+      this.inviteUrlInput.value = this.joinUrl;
+    }
 
     // Render QR
     this.qrBox.innerHTML = generateQRSVG(this.joinUrl);

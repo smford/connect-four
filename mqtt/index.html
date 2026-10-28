@@ -78,10 +78,11 @@
       <h3 class="modal-title">Scan to Join Game</h3>
       <p class="modal-desc">Have Player 2 scan this QR code with their camera to join over encrypted MQTT.</p>
       <div id="qr-box" class="qr-display-container"></div>
-      <div class="action-toolbar">
-        <button id="btn-copy-link" class="btn-secondary">📋 Copy Invite Link</button>
-        <button id="qr-close" class="btn-secondary">Close</button>
+      <div class="invite-url-row">
+        <input id="invite-url-input" type="text" readonly class="invite-input" placeholder="Join URL">
+        <button id="btn-copy-link" class="btn-secondary" style="white-space: nowrap;">📋 Copy</button>
       </div>
+      <button id="qr-close" class="btn-secondary">Close</button>
     </div>
   </div>
 
